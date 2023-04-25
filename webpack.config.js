@@ -64,14 +64,6 @@ const plugins = () => {
         collapseWhitespace: isProd
       }
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, 'src/assets/images'),
-          to: path.resolve(__dirname, 'dist/assets/images')
-        }
-      ]
-    }),
     new MiniCssExtractPlugin({
       filename: filename('css')
     })
@@ -88,7 +80,9 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
-    main: { import: './index.js', filename: 'index.js'}
+    main: { import: './index.js', filename: 'index.js'},
+    eng: { import: './eng.js', filename: 'eng.js' },
+    eng: { import: './ru.js', filename: 'ru.js' }
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
