@@ -81,8 +81,6 @@ module.exports = {
   mode: 'development',
   entry: {
     main: { import: './index.js', filename: 'index.js'},
-    eng: { import: './eng.js', filename: 'eng.js' },
-    eng: { import: './ru.js', filename: 'ru.js' }
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

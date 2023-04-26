@@ -1,0 +1,90 @@
+@import './fonts.css';
+
+.body {
+  font-family: "Montserrat", "Roboto", sans-serif;
+}
+
+.main {
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+
+  &__desc {
+    margin: 1vmin;
+  }
+
+  &__textarea {
+    resize: none;
+    padding: 1vmin 2vmin;
+  }
+}
+
+.keyboard {
+  margin: 5vmin;
+  user-select: none;
+
+  &__row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  &__key {
+    padding: 1.2vmin;
+    min-height: 30px;
+    min-width: 30px;
+    background-color: black;
+    border: 0.5vmin solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.25s;
+    
+    &:hover {
+      background-color: #454545;
+    }
+
+    &:active,
+    &_active {
+      border-color: white;
+    }
+
+    &_secondary {
+      display: none;
+    }
+
+    &_primary,
+    &_secondary,
+    &_special {
+      color: white;
+    }
+
+    &_caps {
+      min-width: 90px;
+    }
+
+    &_left-shift {
+      min-width: 60px;
+    }
+
+    &_space {
+      min-width: 332px;
+    }
+
+    &_last {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.desc__key {
+  color: white;
+  border: 2px solid #454545;
+  background-color: black;
+  padding: 0.5vmin;
+  user-select: none;
+}
