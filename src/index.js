@@ -1,6 +1,7 @@
 import 'normalize.css';
 import favIcon from './assets/favicon.png';
 import { keyboard } from './classes.js';
+import * as events from './events.js';
 import './assets/styles.scss';
 
 // Cookies
@@ -10,6 +11,7 @@ const cookies = decodeURIComponent(document.cookie).split(';');
 const lang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
 
 // Load
+export let textarea;
 
 window.addEventListener('load', () => {
   document.body.insertAdjacentHTML('afterbegin', `
@@ -28,6 +30,7 @@ window.addEventListener('load', () => {
     </main>
   `);
   document.body.classList.add('body');
+  textarea = document.querySelector('.main__textarea');
 
   const main = new keyboard();
   for (let row in main) {
@@ -36,6 +39,13 @@ window.addEventListener('load', () => {
       let k = '';
       main[row][key].hasOwnProperty('en') ? k = main[row][key][lang] : k = main[row][key];
       document.querySelectorAll('.keyboard__row')[Number.parseInt(row.charAt(3)) - 1].insertAdjacentElement('beforeend', k.key);
+      switch (key) {
+        case 'keyBackspace': k.key.addEventListener('click', events.handleBackspaceClick); break;
+        case 'keyTab': k.key.addEventListener('click', events.handleTabClick); break;
+        default: k.key.addEventListener('click', events.handleKeyClick);
+      }
+
+      // Special keys styles
       if (key === 'keyCapsLock') k.key.classList.add('keyboard__key_caps');
       if (key === 'keyLeftShift') k.key.classList.add('keyboard__key_left-shift');
       if (key === 'keySpace') k.key.classList.add('keyboard__key_space');

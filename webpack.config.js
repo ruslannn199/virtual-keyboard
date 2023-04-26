@@ -81,6 +81,7 @@ module.exports = {
   mode: 'development',
   entry: {
     main: { import: './index.js', filename: 'index.js'},
+    classes: { import: './classes.js', filename: 'classes.js'},
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
