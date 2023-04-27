@@ -8,7 +8,7 @@ import './assets/styles.scss';
 if (!document.cookie) document.cookie = 'lang=en; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/';
 
 const cookies = decodeURIComponent(document.cookie).split(';');
-const lang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
+let lang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
 
 // Load
 export let textarea;
@@ -42,6 +42,9 @@ window.addEventListener('load', () => {
       switch (key) {
         case 'keyBackspace': k.key.addEventListener('click', events.handleBackspaceClick); break;
         case 'keyTab': k.key.addEventListener('click', events.handleTabClick); break;
+        case 'keyDelete': k.key.addEventListener('click', events.handleDeleteClick); break;
+        case 'keyEnter': k.key.addEventListener('click', events.handleEnterClick); break;
+        case 'keyUp': k.key.addEventListener('click', events.handleKeyUpClick); break;
         default: k.key.addEventListener('click', events.handleKeyClick);
       }
 
