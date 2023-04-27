@@ -58,25 +58,35 @@ export const handleEnterClick = () => {
 }
 export const handleKeyUpClick = () => {
   updateSelections();
-  const rowStart = textarea.value.lastIndexOf('\n', SELECTION_START);
-  const rowEnd = textarea.value.indexOf('\n', SELECTION_START);
-  console.log(SELECTION_START, rowStart, rowEnd);
+  const rowStart = textarea.value.lastIndexOf('\n', SELECTION_START) + 1;
+  const rowLength = SELECTION_START - rowStart;
+  const prevRowStart = textarea.value.lastIndexOf('\n', rowStart - 2) + 1;
+  const prevRowLength = rowStart - prevRowStart - 1;
+
   textarea.focus();
-  if (rowStart === -1) {
-    // textarea.setSelectionRange(0, rowEnd);
+  if (prevRowStart === 0) return;
+  rowLength < prevRowLength ? textarea.setSelectionRange(prevRowStart + rowLength, prevRowStart + rowLength) : textarea.setSelectionRange(rowStart - 1, rowStart - 1);
+}
+
+export const handleKeyDownClick = () => {
+  updateSelections();
+  const rowStart = textarea.value.lastIndexOf('\n', SELECTION_END) + 1;
+  const rowEnd = textarea.value.indexOf('\n', SELECTION_END);
+  if (rowEnd === -1) {
+    textarea.focus();
+    return;
   }
-  else if (rowEnd === -1) {
-    // textarea.setSelectionRange(rowStart + 1, textarea.value.length);
-  }
-  else if (rowStart === rowEnd) {
-    // TODO Проблемы: в конце первой строки
-  }
-  else {
-    const rowLength = rowEnd - rowStart - 1;
-    // const currentRow = (SELECTION_START - rowStart) % rowLength;
-    // const newPosition = currentRow + rowStart + 1;
-    // textarea.setSelectionRange(newPosition, newPosition);
-  }
+  const rowLength = SELECTION_END - rowStart;
+  let nextRowEnd = textarea.value.indexOf('\n', rowEnd + 1);
+  let nextRowLength;
+  if (nextRowEnd === -1) {
+    nextRowEnd = textarea.value.length - 1;
+  } 
+  nextRowLength = nextRowEnd - rowEnd - 1;
+  console.log('\nRow End: ' + rowEnd, '\nRow Length: ' + rowLength, '\nNext Row End: ' + nextRowEnd, '\nNext Row Length: ' + nextRowLength);
+
+  textarea.focus();
+  rowLength > nextRowLength ? textarea.setSelectionRange(rowEnd + rowLength + 1, rowEnd + rowLength + 1) : textarea.setSelectionRange(nextRowEnd, nextRowEnd);
 }
 
 const updateSelections = () => {
