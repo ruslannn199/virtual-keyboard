@@ -2,6 +2,12 @@ import { textarea } from "./index.js";
 
 let SELECTION_START;
 let SELECTION_END;
+let CTRL_FLAG = 0;
+let ALT_FLAG = 0;
+
+// TODO LeftCtrl, LeftAlt
+
+// TODO Нажатие на CAPS и SHIFT на клаве работает аналогично нажатию на клаве
 
 // TODO Key, Tab, Enter добавить функцию по правильному изменению во время выделения (SELECTION_START != SELECTION_END)
 export const handleKeyClick = evt => {
@@ -43,7 +49,8 @@ export const handleDeleteClick = () => {
   SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START, SELECTION_START) : textarea.setSelectionRange(SELECTION_START, SELECTION_START);
 }
 
-export const handleTabClick = () => {
+export const handleTabClick = evt => {
+  evt.preventDefault();
   updateSelections();
   textarea.value = updateValue('    ');
   textarea.focus();
@@ -103,6 +110,56 @@ export const handleKeyRightClick = () => {
   SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START + 1, SELECTION_START + 1) : textarea.setSelectionRange(SELECTION_END, SELECTION_END);
 }
 
+export const handleEmptyClick = evt => {
+  evt.preventDefault();
+  textarea.focus();
+}
+
+export const keyboardToUpperCase = () => {
+  textarea.focus();
+  const primaryKeys = document.querySelectorAll('.keyboard__key_primary');
+  const secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
+  toggleClasses(primaryKeys);
+  toggleClasses(secondaryKeys);
+}
+
+export const handleCtrlLeftClick = evt => {
+  evt.preventDefault();
+  CTRL_FLAG === 0 ? CTRL_FLAG = 1 : CTRL_FLAG = 0;
+  console.log('CTRL FLAG: ' + CTRL_FLAG);
+}
+
+export const handleAltLeftClick = evt => {
+  evt.preventDefault();
+  ALT_FLAG === 0 ? ALT_FLAG = 1 : ALT_FLAG = 0;
+  console.log('ALT FLAG: ' + ALT_FLAG);
+}
+
+export const handleKeyDown = evt => {
+  textarea.focus();
+  const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
+  console.log(evt.code);
+  keyArr.forEach(key => {
+    switch (evt.key) {
+      case 'Control': if (key.innerText === 'Ctrl') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'Meta': if (key.innerText === 'Win') key.parentNode.classList.add('keyboard__key_active'); break;
+      default: if (key.innerText === evt.key) key.parentNode.classList.add('keyboard__key_active');
+    }
+  });
+}
+
+export const handleKeyUp = evt => {
+  textarea.focus();
+  const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
+  keyArr.forEach(key => {
+    switch (evt.key) {
+      case 'Control': if (key.innerText === 'Ctrl') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'Meta': if (key.innerText === 'Win') key.parentNode.classList.remove('keyboard__key_active'); break;
+      default: if (key.innerText === evt.key) key.parentNode.classList.remove('keyboard__key_active');
+    }
+  });
+}
+
 const updateSelections = () => {
   SELECTION_START = textarea.selectionStart;
   SELECTION_END = textarea.selectionEnd;
@@ -110,4 +167,11 @@ const updateSelections = () => {
 
 const updateValue = value => {
   return textarea.value.slice(0, SELECTION_START) + value + textarea.value.slice(SELECTION_END);
+}
+
+const toggleClasses = keyArr => {
+  keyArr.forEach(key => {
+    key.classList.toggle('keyboard__key_primary');
+    key.classList.toggle('keyboard__key_secondary');
+  })
 }

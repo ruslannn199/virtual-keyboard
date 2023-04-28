@@ -1,5 +1,3 @@
-
-
 export class keyboard {
   constructor() {
     this.row1 = {};
@@ -147,7 +145,7 @@ export class keyboard {
 
     this.row5 = {};
     this.row5.keyCtrlLeft = new specialKey('Ctrl');
-    this.row5.keyWinLeft = new specialKey('Win');
+    this.row5.keyWin = new specialKey('Win');
     this.row5.keyAltLeft = new specialKey('Alt');
     this.row5.keySpace = new key(' ', ' ');
     this.row5.keyAltRight = new specialKey('Alt');
