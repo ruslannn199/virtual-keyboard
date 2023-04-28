@@ -4,6 +4,7 @@ let SELECTION_START;
 let SELECTION_END;
 let CTRL_FLAG = 0;
 let ALT_FLAG = 0;
+let CAPS_FLAG = 0;
 
 // TODO LeftCtrl, LeftAlt
 
@@ -115,14 +116,6 @@ export const handleEmptyClick = evt => {
   textarea.focus();
 }
 
-export const keyboardToUpperCase = () => {
-  textarea.focus();
-  const primaryKeys = document.querySelectorAll('.keyboard__key_primary');
-  const secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
-  toggleClasses(primaryKeys);
-  toggleClasses(secondaryKeys);
-}
-
 export const handleCtrlLeftClick = evt => {
   evt.preventDefault();
   CTRL_FLAG === 0 ? CTRL_FLAG = 1 : CTRL_FLAG = 0;
@@ -138,11 +131,56 @@ export const handleAltLeftClick = evt => {
 export const handleKeyDown = evt => {
   textarea.focus();
   const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
-  console.log(evt.code);
+  console.log(evt.key, evt.code);
+  if (evt.code === 'Space') {
+    document.querySelector('.keyboard__key_space').classList.add('keyboard__key_active'); return;
+  }
   keyArr.forEach(key => {
     switch (evt.key) {
-      case 'Control': if (key.innerText === 'Ctrl') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'Control': {
+        if (key.innerText === 'Ctrl') {
+          if (key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlLeft' ||
+             !key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlRight') {
+              key.parentNode.classList.add('keyboard__key_active');
+          }
+        }
+      }; break;
       case 'Meta': if (key.innerText === 'Win') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'Shift': {
+        if (key.innerText === 'Shift') {
+          CAPS_FLAG === 1 ? CAPS_FLAG = 1 : CAPS_FLAG = 2;
+          keyboardToUpperCase();
+          if (key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftLeft' ||
+             !key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftRight') {
+              key.parentNode.classList.add('keyboard__key_active');
+          };
+        };
+      }; break;
+      case 'CapsLock': if (key.innerText === 'Caps Lock') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'Alt': {
+        if (key.innerText === 'Alt') {
+          if (key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltLeft' ||
+             !key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltRight') {
+              key.parentNode.classList.add('keyboard__key_active');
+              setTimeout(() => {
+                key.parentNode.classList.remove('keyboard__key_active');
+              }, 500);
+          }
+        }
+      }; break;
+      case 'Delete': if (key.innerText === 'Del') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'Tab': {
+        if (key.innerText === 'Tab') {
+          key.parentNode.classList.add('keyboard__key_active');
+          setTimeout(() => {
+            key.parentNode.classList.remove('keyboard__key_active');
+          }, 500);
+        }
+      }; break;
+      case 'ArrowUp': if (key.innerText === '↑') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'ArrowLeft': if (key.innerText === '←') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'ArrowDown': if (key.innerText === '↓') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'ArrowRight': if (key.innerText === '→') key.parentNode.classList.add('keyboard__key_active'); break;
       default: if (key.innerText === evt.key) key.parentNode.classList.add('keyboard__key_active');
     }
   });
@@ -150,14 +188,56 @@ export const handleKeyDown = evt => {
 
 export const handleKeyUp = evt => {
   textarea.focus();
+  if (evt.code === 'Space') {
+    document.querySelector('.keyboard__key_space').classList.remove('keyboard__key_active'); return;
+  }
   const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
   keyArr.forEach(key => {
     switch (evt.key) {
-      case 'Control': if (key.innerText === 'Ctrl') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'Control': {
+        if (key.innerText === 'Ctrl') {
+          if (key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlLeft' ||
+             !key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlRight') {
+              key.parentNode.classList.remove('keyboard__key_active');
+          }
+        }
+      }; break;
       case 'Meta': if (key.innerText === 'Win') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'Shift': {
+        if (key.innerText === 'Shift') {
+          CAPS_FLAG === 1 ? CAPS_FLAG = 0 : CAPS_FLAG = 1;
+          keyboardToUpperCase();
+          if (key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftLeft' ||
+             !key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftRight') {
+              key.parentNode.classList.remove('keyboard__key_active');
+          }
+        }
+      }; break;
+      case 'CapsLock': if (key.innerText === 'Caps Lock') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'Alt': {
+        if (key.innerText === 'Alt') {
+          if (key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltLeft' ||
+             !key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltRight') {
+              key.parentNode.classList.remove('keyboard__key_active');
+          }
+        }
+      }; break;
+      case 'Delete': if (key.innerText === 'Del') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'ArrowUp': if (key.innerText === '↑') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'ArrowLeft': if (key.innerText === '←') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'ArrowDown': if (key.innerText === '↓') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'ArrowRight': if (key.innerText === '→') key.parentNode.classList.remove('keyboard__key_active'); break;
       default: if (key.innerText === evt.key) key.parentNode.classList.remove('keyboard__key_active');
     }
   });
+}
+
+export const keyboardToUpperCase = () => {
+  textarea.focus();
+  const primaryKeys = document.querySelectorAll('.keyboard__key_primary');
+  const secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
+  toggleClasses(primaryKeys);
+  toggleClasses(secondaryKeys);
 }
 
 const updateSelections = () => {

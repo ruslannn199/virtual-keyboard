@@ -4,8 +4,10 @@ import { keyboard } from './classes.js';
 import * as events from './events.js';
 import './assets/styles.scss';
 
+// TODO сделать радужной подсветку (по приколу)
+
 // Cookies
-if (!document.cookie) document.cookie = 'lang=en; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/';
+if (!document.cookie) document.cookie = 'lang=en; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/';
 
 const cookies = decodeURIComponent(document.cookie).split(';');
 let lang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
@@ -39,6 +41,15 @@ window.addEventListener('load', () => {
       let keyFullElem = '';
       main[row][key].hasOwnProperty('en') ? keyFullElem = main[row][key][lang] : keyFullElem = main[row][key];
       document.querySelectorAll('.keyboard__row')[Number.parseInt(row.charAt(3)) - 1].insertAdjacentElement('beforeend', keyFullElem.key);
+      
+      // Std key listeners
+      textarea.addEventListener('keydown', (evt) => {
+        if (evt.metaKey || evt.altKey || evt.tabKey) {
+          evt.preventDefault();
+          textarea.focus();
+        }
+      });
+
       // Main event listeners
       switch (key) {
         case 'keyBackspace': keyFullElem.key.addEventListener('click', events.handleBackspaceClick); break;
@@ -46,7 +57,7 @@ window.addEventListener('load', () => {
         case 'keyDelete': keyFullElem.key.addEventListener('click', events.handleDeleteClick); break;
         case 'keyCapsLock': keyFullElem.key.addEventListener('click', events.keyboardToUpperCase); break;
         case 'keyEnter': keyFullElem.key.addEventListener('click', events.handleEnterClick); break;
-        case 'keyLeftShift': case 'keyRightShift': keyFullElem.key.addEventListener('mousedown', events.keyboardToUpperCase); keyFullElem.key.addEventListener('mouseup', events.keyboardToUpperCase); keyFullElem.key.addEventListener('keydown', events.keyboardToUpperCase); keyFullElem.key.addEventListener('keyup', events.keyboardToUpperCase); break;
+        case 'keyShiftLeft': case 'keyShiftRight': keyFullElem.key.addEventListener('mousedown', events.keyboardToUpperCase); keyFullElem.key.addEventListener('mouseup', events.keyboardToUpperCase); keyFullElem.key.addEventListener('keydown', events.keyboardToUpperCase); keyFullElem.key.addEventListener('keyup', events.keyboardToUpperCase); break;
         case 'keyCtrlLeft': keyFullElem.key.addEventListener('mousedown', events.handleCtrlLeftClick); keyFullElem.key.addEventListener('mouseup', events.handleCtrlLeftClick); break;
         case 'keyAltLeft': keyFullElem.key.addEventListener('mousedown', events.handleAltLeftClick); keyFullElem.key.addEventListener('mouseup', events.handleAltLeftClick); break;
         case 'keyUp': keyFullElem.key.addEventListener('click', events.handleKeyUpClick); break;
@@ -60,7 +71,9 @@ window.addEventListener('load', () => {
       // Special keys styles
       switch (key) {
         case 'keyCapsLock': keyFullElem.key.classList.add('keyboard__key_caps'); break;
-        case 'keyLeftShift': keyFullElem.key.classList.add('keyboard__key_left-shift'); break;
+        case 'keyShiftLeft': keyFullElem.key.classList.add('keyboard__key_left-shift'); break;
+        case 'keyCtrlLeft': keyFullElem.key.classList.add('keyboard__key_left-ctrl'); break;
+        case 'keyAltLeft': keyFullElem.key.classList.add('keyboard__key_left-alt'); break;
         case 'keySpace': keyFullElem.key.classList.add('keyboard__key_space'); break;
         case indexes[indexes.length - 1]: keyFullElem.key.classList.add('keyboard__key_last');
       }

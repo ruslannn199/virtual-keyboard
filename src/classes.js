@@ -109,7 +109,7 @@ export class keyboard {
     this.row3.keyEnter = new specialKey('Enter');
 
     this.row4 = {};
-    this.row4.keyLeftShift = new specialKey('Shift');
+    this.row4.keyShiftLeft = new specialKey('Shift');
     this.row4.keyZ = {};
     this.row4.keyZ.en = new key('z', 'Z');
     this.row4.keyZ.ru = new key('я', 'Я');
@@ -141,7 +141,7 @@ export class keyboard {
     this.row4.keySlash.en = new key('/', '?');
     this.row4.keySlash.ru = new key('.', ',');
     this.row4.keyUp = new specialKey('↑');
-    this.row4.keyRightShift = new specialKey('Shift');
+    this.row4.keyShiftRight = new specialKey('Shift');
 
     this.row5 = {};
     this.row5.keyCtrlLeft = new specialKey('Ctrl');
