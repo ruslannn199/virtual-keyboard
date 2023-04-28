@@ -45,7 +45,9 @@ window.addEventListener('load', () => {
         case 'keyDelete': k.key.addEventListener('click', events.handleDeleteClick); break;
         case 'keyEnter': k.key.addEventListener('click', events.handleEnterClick); break;
         case 'keyUp': k.key.addEventListener('click', events.handleKeyUpClick); break;
+        case 'keyLeft': k.key.addEventListener('click', events.handleKeyLeftClick); break;
         case 'keyDown': k.key.addEventListener('click', events.handleKeyDownClick); break;
+        case 'keyRight': k.key.addEventListener('click', events.handleKeyRightClick); break;
         default: k.key.addEventListener('click', events.handleKeyClick);
       }
 

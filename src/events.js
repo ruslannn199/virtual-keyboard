@@ -60,18 +60,21 @@ export const handleKeyUpClick = () => {
   updateSelections();
   const rowStart = textarea.value.lastIndexOf('\n', SELECTION_START) + 1;
   const rowLength = SELECTION_START - rowStart;
-  const prevRowStart = textarea.value.lastIndexOf('\n', rowStart - 2) + 1;
+  let prevRowStart = textarea.value.lastIndexOf('\n', rowStart - 2) + 1;
   const prevRowLength = rowStart - prevRowStart - 1;
 
+  // console.log('Row Start: ' + rowStart, '\nRow Length: ' + rowLength, '\nPrev Row Start: ' + prevRowStart, '\nPrev Row Length: ' + prevRowLength);
+
   textarea.focus();
-  if (prevRowStart === 0) return;
+  if (rowStart === 0) return;
   rowLength < prevRowLength ? textarea.setSelectionRange(prevRowStart + rowLength, prevRowStart + rowLength) : textarea.setSelectionRange(rowStart - 1, rowStart - 1);
 }
 
 export const handleKeyDownClick = () => {
   updateSelections();
-  const rowStart = textarea.value.lastIndexOf('\n', SELECTION_END) + 1;
+  let rowStart;
   const rowEnd = textarea.value.indexOf('\n', SELECTION_END);
+  textarea.value.lastIndexOf('\n', SELECTION_END) === rowEnd ? rowStart = textarea.value.lastIndexOf('\n', SELECTION_END - 1) + 1 : rowStart = textarea.value.lastIndexOf('\n', SELECTION_END) + 1;
   if (rowEnd === -1) {
     textarea.focus();
     return;
@@ -80,13 +83,24 @@ export const handleKeyDownClick = () => {
   let nextRowEnd = textarea.value.indexOf('\n', rowEnd + 1);
   let nextRowLength;
   if (nextRowEnd === -1) {
-    nextRowEnd = textarea.value.length - 1;
+    nextRowEnd = textarea.value.length;
   } 
   nextRowLength = nextRowEnd - rowEnd - 1;
-  console.log('\nRow End: ' + rowEnd, '\nRow Length: ' + rowLength, '\nNext Row End: ' + nextRowEnd, '\nNext Row Length: ' + nextRowLength);
 
   textarea.focus();
-  rowLength > nextRowLength ? textarea.setSelectionRange(rowEnd + rowLength + 1, rowEnd + rowLength + 1) : textarea.setSelectionRange(nextRowEnd, nextRowEnd);
+  rowLength <= nextRowLength ? textarea.setSelectionRange(rowEnd + rowLength + 1, rowEnd + rowLength + 1) : textarea.setSelectionRange(nextRowEnd, nextRowEnd);
+}
+
+export const handleKeyLeftClick = () => {
+  updateSelections();
+  textarea.focus();
+  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START - 1, SELECTION_START - 1) : textarea.setSelectionRange(SELECTION_START, SELECTION_START);
+}
+
+export const handleKeyRightClick = () => {
+  updateSelections();
+  textarea.focus();
+  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START + 1, SELECTION_START + 1) : textarea.setSelectionRange(SELECTION_END, SELECTION_END);
 }
 
 const updateSelections = () => {
