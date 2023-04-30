@@ -42,6 +42,9 @@ window.addEventListener('load', () => {
       const indexes = Object.keys(main[row]);
       let keyFullElem = '';
       main[row][key].hasOwnProperty('en') ? keyFullElem = main[row][key][lang] : keyFullElem = main[row][key];
+      if (keyFullElem.isLetter){
+        keyFullElem.key.classList.add('keyboard__key_shiftable');
+      }
       document.querySelectorAll('.keyboard__row')[Number.parseInt(row.charAt(3)) - 1].insertAdjacentElement('beforeend', keyFullElem.key);
 
       // Std key listeners

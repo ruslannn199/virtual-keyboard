@@ -73,8 +73,6 @@ export const handleKeyUpClick = () => {
   let prevRowStart = textarea.value.lastIndexOf('\n', rowStart - 2) + 1;
   const prevRowLength = rowStart - prevRowStart - 1;
 
-  // console.log('Row Start: ' + rowStart, '\nRow Length: ' + rowLength, '\nPrev Row Start: ' + prevRowStart, '\nPrev Row Length: ' + prevRowLength);
-
   textarea.focus();
   if (rowStart === 0) return;
   rowLength < prevRowLength ? textarea.setSelectionRange(prevRowStart + rowLength, prevRowStart + rowLength) : textarea.setSelectionRange(rowStart - 1, rowStart - 1);
@@ -120,28 +118,23 @@ export const handleEmptyClick = evt => {
 
 export const handleCtrlLeftDown = () => {
   CTRL_FLAG = 1;
-  console.log('CTRL FLAG: ' + CTRL_FLAG);
 }
 
 export const handleCtrlLeftUp = () => {
   CTRL_FLAG = 0;
-  console.log('CTRL FLAG: ' + CTRL_FLAG);
 }
 
 export const handleAltLeftDown = () => {
   ALT_FLAG = 1;
-  console.log('ALT FLAG: ' + ALT_FLAG);
 }
 
 export const handleAltLeftUp = () => {
   ALT_FLAG = 0;
-  console.log('ALT FLAG: ' + ALT_FLAG);
 }
 
 export const handleKeyDown = evt => {
   textarea.focus();
   const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
-  console.log(evt.key, evt.code);
   if (evt.code === 'Space') {
     document.querySelector('.keyboard__key_space').classList.add('keyboard__key_active'); return;
   }
@@ -154,7 +147,6 @@ export const handleKeyDown = evt => {
               key.parentNode.classList.add('keyboard__key_active');
               if (evt.code === 'ControlLeft') {
                 CTRL_FLAG = 1;
-                console.log('CTRL FLAG: ' + CTRL_FLAG);
               }
           }
         }
@@ -178,7 +170,6 @@ export const handleKeyDown = evt => {
               key.parentNode.classList.add('keyboard__key_active');
               if (evt.code === 'AltLeft') {
                 ALT_FLAG = 1;
-                console.log('ALT FLAG: ' + ALT_FLAG);
               }
           }
         }
@@ -220,7 +211,6 @@ export const handleKeyUp = evt => {
                   switchLanguage();
                 }
                 CTRL_FLAG = 0;
-                console.log('CTRL FLAG: ' + CTRL_FLAG);
               }
           }
         }
@@ -253,7 +243,6 @@ export const handleKeyUp = evt => {
                   switchLanguage();
                 }
                 ALT_FLAG = 0;
-                console.log('ALT FLAG: ' + ALT_FLAG);
               }
           }
         }
@@ -275,16 +264,19 @@ export const keyboardCapsClick = () => {
 
 export const keyboardShiftDown = () => {
   SHIFT_FLAG = 1;
+  console.log('shift down!');
   keyboardCaseSwitch();
 }
 
 export const keyboardShiftUp = () => {
   SHIFT_FLAG = 0;
+  console.log('shift up!');
   keyboardCaseSwitch();
 }
 
 export const focusLose = () => {
   CTRL_FLAG, ALT_FLAG, SHIFT_FLAG = 0;
+  // TODO убрать SHIFT_FLAG, а то клик не работает
   keyboardCaseSwitch();
   const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
   keyArr.forEach(key => {
@@ -306,6 +298,9 @@ const switchLanguage = () => {
         let keyFullElem = newKeyboard[row][key];
         const prevText = keyFullElem[curLang].primaryElement.innerText;
         keyFullElem = keyFullElem[lang];
+        if (keyFullElem.isLetter){
+          keyFullElem.key.classList.add('keyboard__key_shiftable');
+        }
         primaryKeys.forEach(prim => {
           if (prim.innerText === prevText) {
             keyFullElem.key.addEventListener('click', handleKeyClick);
@@ -333,9 +328,10 @@ const updateValue = value => {
 
 const keyboardCaseSwitch = () => {
   textarea.focus();
+  console.log(SHIFT_FLAG, CAPS_FLAG);
   if (SHIFT_FLAG !== CAPS_FLAG) {
-    removeClasses(primaryKeys);
     addClasses(secondaryKeys);
+    removeClasses(primaryKeys);
   }
   else {
     addClasses(primaryKeys);
@@ -343,16 +339,21 @@ const keyboardCaseSwitch = () => {
   }
 }
 
+// Only shiftable changing, change only to shiftable!
 const addClasses = keyArr => {
   keyArr.forEach(key => {
     key.classList.add('keyboard__key_primary');
     key.classList.remove('keyboard__key_secondary');
+    if (!key.parentNode.classList.contains('keyboard__key_shiftable')) {
+    }
   })
 }
 
 const removeClasses = keyArr => {
   keyArr.forEach(key => {
-    key.classList.remove('keyboard__key_primary');
     key.classList.add('keyboard__key_secondary');
+    key.classList.remove('keyboard__key_primary');
+    if (!key.parentNode.classList.contains('keyboard__key_shiftable')) {
+    }
   })
 }

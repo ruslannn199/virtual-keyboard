@@ -1,3 +1,5 @@
+const REGEXP = /^[a-zA-Zа-яА-ЯЁё]+$/;
+
 export class keyboard {
   constructor() {
     this.row1 = {};
@@ -159,10 +161,12 @@ export class keyboard {
 export class key {
   constructor(primaryChar, secondaryChar) {
     this.key = this.createEmptyKey();
-    this.key.isLetter = false; // TODO
+
     this.primaryElement = document.createElement('span');
     this.primaryElement.classList.add('keyboard__key_primary');
     this.primaryElement.textContent = primaryChar;
+
+    this.isLetter = primaryChar.match(REGEXP);
 
     this.secondaryElement = document.createElement('span');
     this.secondaryElement.classList.add('keyboard__key_secondary');
