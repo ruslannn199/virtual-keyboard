@@ -14,6 +14,8 @@ let lang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
 
 // Load
 export let textarea;
+export let primaryKeys;
+export let secondaryKeys;
 
 window.addEventListener('load', () => {
   document.body.insertAdjacentHTML('afterbegin', `
@@ -37,14 +39,14 @@ window.addEventListener('load', () => {
   const main = new keyboard();
   for (let row in main) {
     for (let key in main[row]) {
-      const indexes = Object.keys(main[row])
+      const indexes = Object.keys(main[row]);
       let keyFullElem = '';
       main[row][key].hasOwnProperty('en') ? keyFullElem = main[row][key][lang] : keyFullElem = main[row][key];
       document.querySelectorAll('.keyboard__row')[Number.parseInt(row.charAt(3)) - 1].insertAdjacentElement('beforeend', keyFullElem.key);
-      
+
       // Std key listeners
       textarea.addEventListener('keydown', (evt) => {
-        if (evt.metaKey || evt.altKey || evt.tabKey) {
+        if (evt.metaKey || evt.altKey) {
           evt.preventDefault();
           textarea.focus();
         }
@@ -55,11 +57,11 @@ window.addEventListener('load', () => {
         case 'keyBackspace': keyFullElem.key.addEventListener('click', events.handleBackspaceClick); break;
         case 'keyTab': keyFullElem.key.addEventListener('click', events.handleTabClick); break;
         case 'keyDelete': keyFullElem.key.addEventListener('click', events.handleDeleteClick); break;
-        case 'keyCapsLock': keyFullElem.key.addEventListener('click', events.keyboardToUpperCase); break;
+        case 'keyCapsLock': keyFullElem.key.addEventListener('click', events.keyboardCapsClick); break;
         case 'keyEnter': keyFullElem.key.addEventListener('click', events.handleEnterClick); break;
-        case 'keyShiftLeft': case 'keyShiftRight': keyFullElem.key.addEventListener('mousedown', events.keyboardToUpperCase); keyFullElem.key.addEventListener('mouseup', events.keyboardToUpperCase); keyFullElem.key.addEventListener('keydown', events.keyboardToUpperCase); keyFullElem.key.addEventListener('keyup', events.keyboardToUpperCase); break;
-        case 'keyCtrlLeft': keyFullElem.key.addEventListener('mousedown', events.handleCtrlLeftClick); keyFullElem.key.addEventListener('mouseup', events.handleCtrlLeftClick); break;
-        case 'keyAltLeft': keyFullElem.key.addEventListener('mousedown', events.handleAltLeftClick); keyFullElem.key.addEventListener('mouseup', events.handleAltLeftClick); break;
+        case 'keyShiftLeft': case 'keyShiftRight': keyFullElem.key.addEventListener('mousedown', events.keyboardShiftDown); keyFullElem.key.addEventListener('mouseup', events.keyboardShiftUp); break;
+        case 'keyCtrlLeft': keyFullElem.key.addEventListener('mousedown', events.handleCtrlLeftDown); keyFullElem.key.addEventListener('mouseup', events.handleCtrlLeftUp); break;
+        case 'keyAltLeft': keyFullElem.key.addEventListener('mousedown', events.handleAltLeftDown); keyFullElem.key.addEventListener('mouseup', events.handleAltLeftUp); break;
         case 'keyUp': keyFullElem.key.addEventListener('click', events.handleKeyUpClick); break;
         case 'keyLeft': keyFullElem.key.addEventListener('click', events.handleKeyLeftClick); break;
         case 'keyDown': keyFullElem.key.addEventListener('click', events.handleKeyDownClick); break;
@@ -81,11 +83,20 @@ window.addEventListener('load', () => {
       // KeyBoard Highlight Listeners
       textarea.addEventListener('keydown', events.handleKeyDown);
       textarea.addEventListener('keyup', events.handleKeyUp);
+      textarea.addEventListener('blur', events.focusLose);
     }
   }
+  primaryKeys = document.querySelectorAll('.keyboard__key_primary');
+  secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
 
   document.querySelector('.main').insertAdjacentHTML('beforeend', `
     <p class="main__desc">Клавиатура создана в Windows OS</p>
     <p class="main__desc">Для переключения языка нажмите левые <span class="desc__key">Ctrl</span> + <span class="desc__key">Alt</span></p>
   `)
-})
+});
+
+export const updateLangVars = lang => {
+  primaryKeys = document.querySelectorAll('.keyboard__key_primary');
+  secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
+  document.cookie = `lang=${lang}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/`;
+}

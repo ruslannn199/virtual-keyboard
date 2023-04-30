@@ -159,6 +159,7 @@ export class keyboard {
 export class key {
   constructor(primaryChar, secondaryChar) {
     this.key = this.createEmptyKey();
+    this.key.isLetter = false; // TODO
     this.primaryElement = document.createElement('span');
     this.primaryElement.classList.add('keyboard__key_primary');
     this.primaryElement.textContent = primaryChar;
