@@ -1,0 +1,717 @@
+/*!**********************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js!../node_modules/normalize.css/normalize.css ***!
+  \**********************************************************************************************/
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+
+/**
+ * Remove the margin in all browsers.
+ */
+
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+
+[hidden] {
+  display: none;
+}
+
+/*!*********************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js!./assets/fonts.css ***!
+  \*********************************************************************/
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/b21da07c934a28b2fef3.woff2) format('woff2'),
+      url(assets/fonts/9fa4a8113c081e9b3138.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/cd5a79c185e92ebe6b94.woff2) format('woff2'),
+      url(assets/fonts/a3513eaf0ad708fff3ca.woff) format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/e26e5c4fde2ec3e5bf71.woff2) format('woff2'),
+      url(assets/fonts/65f2f623b88fefa3fe3e.woff) format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/89909ce653d7b6c0f12b.woff2) format('woff2'),
+      url(assets/fonts/59bbaf592c62cb87ecc6.woff) format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/4ca616225439b353c722.woff2) format('woff2'),
+      url(assets/fonts/c981701f695c76440cb3.woff) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/f476452e71e918ed9d9a.woff2) format('woff2'),
+      url(assets/fonts/0f8cae2dc092ab9f2ba9.woff) format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/0a203fd6e3bba185629d.woff2) format('woff2'),
+      url(assets/fonts/24d270c04a21572bbba5.woff) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/9d43b86421e004e704b9.woff2) format('woff2'),
+      url(assets/fonts/0944be1093c62cedb919.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/8374b555761a39b1c5e7.woff2) format('woff2'),
+      url(assets/fonts/7647ccb144fe42812063.woff) format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/86d943cd3dc2a1ab6de7.woff2) format('woff2'),
+      url(assets/fonts/28e505168e7ed04c6bae.woff) format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/8e9578cce5d551036e41.woff2) format('woff2'),
+      url(assets/fonts/43cf5af8ceefc30114f7.woff) format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(assets/fonts/57b8a81c7519e4d6b555.woff2) format('woff2'),
+      url(assets/fonts/e624b10d53c919bd7496.woff) format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/f90c1047271873c29f87.woff2) format('woff2'),
+      url(assets/fonts/e3995ee7c61a9eb95e81.woff) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/d28745f2b8e5c12d3607.woff2) format('woff2'),
+      url(assets/fonts/3155f256200b7d559607.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/8b9fbc813c539badd1c5.woff2) format('woff2'),
+      url(assets/fonts/bb56843bd48566e07ad7.woff) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/1f4383ae07ba451b4ff1.woff2) format('woff2'),
+      url(assets/fonts/d828c579cdb610c0cbe9.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/314183b4597fd23d3b6f.woff2) format('woff2'),
+      url(assets/fonts/416e56c6d01b1b13c408.woff) format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/0faca6b49f5bb624b262.woff2) format('woff2'),
+      url(assets/fonts/1a39d1a111110898dfd9.woff) format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/fc7d04bd48b77889f527.woff2) format('woff2'),
+      url(assets/fonts/03bd855a68f1712ffa23.woff) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/af99ff5e6a8b6ab96f30.woff2) format('woff2'),
+      url(assets/fonts/73f022211e34f73b9544.woff) format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/8a7f2dae8958016e3489.woff2) format('woff2'),
+      url(assets/fonts/7d5b29a7a7a3e4712259.woff) format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/66a6eac46c526ad6dad8.woff2) format('woff2'),
+      url(assets/fonts/c03536ae38b0f812f56d.woff) format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/eeeb734b6db3931949dd.woff2) format('woff2'),
+      url(assets/fonts/ef766db13777b22e2d52.woff) format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/cf734a3745838e63cc2a.woff2) format('woff2'),
+      url(assets/fonts/2451e96bc4c62e5ad1d0.woff) format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/4ada7f2f580c676690f0.woff2) format('woff2'),
+      url(assets/fonts/4a3d63613a362f90a9e6.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/165aed18e64970167ee7.woff2) format('woff2'),
+      url(assets/fonts/411a4d1469b75e0248ff.woff) format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/0f05b75f85e78a138259.woff2) format('woff2'),
+      url(assets/fonts/373eadfc76452d57675f.woff) format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/a95d02b901719ce9c139.woff2) format('woff2'),
+      url(assets/fonts/3db1a9575b6c29f62162.woff) format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(assets/fonts/b50a1758e4f607d93111.woff2) format('woff2'),
+      url(assets/fonts/d2f89d58c160e73f2a32.woff) format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+/*!***************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/dist/cjs.js!./assets/styles.scss ***!
+  \***************************************************************************************************************/
+.body {
+  font-family: "Montserrat", "Roboto", sans-serif;
+  background: url(assets/computer.gif) center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column; }
+  .main__textarea {
+    resize: none;
+    margin: 114px 55px 350px 0;
+    padding: 10px 15px;
+    font-weight: 600;
+    color: #9CCFB0;
+    background-color: #675E91;
+    border: none;
+    cursor: unset; }
+    .main__textarea:focus {
+      outline: none; }
+    .main__textarea::placeholder {
+      color: #AE7B9B; }
+    .main__textarea::-webkit-scrollbar {
+      width: 8px; }
+    .main__textarea::-webkit-scrollbar-track {
+      background-color: transparent; }
+    .main__textarea::-webkit-scrollbar-thumb {
+      padding: 2px;
+      background-color: #AE7B9B;
+      border-radius: 4px; }
+  .main__heading {
+    visibility: hidden; }
+
+.keyboard {
+  position: fixed;
+  bottom: 1%;
+  left: auto;
+  user-select: none;
+  background-color: #AE7B9B; }
+  .keyboard__row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; }
+  .keyboard__key {
+    padding: 1.2vmin;
+    min-height: 30px;
+    min-width: 30px;
+    background-color: #9CCFB0;
+    border: 0.5vmin solid #AE7B9B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.35s; }
+    .keyboard__key:hover {
+      background-color: #BC8F89; }
+    .keyboard__key:active, .keyboard__key_active {
+      border-color: #9CCFB0;
+      background-color: #BC8F89; }
+    .keyboard__key_secondary {
+      display: none; }
+    .keyboard__key_primary, .keyboard__key_secondary, .keyboard__key_special {
+      color: #675E91; }
+    .keyboard__key_caps {
+      min-width: 90px; }
+    .keyboard__key_left-shift {
+      min-width: 60px; }
+    .keyboard__key_space {
+      min-width: 332px; }
+    .keyboard__key_last {
+      width: 100%;
+      height: 100%; }
+
+.legend {
+  position: fixed;
+  right: 1vmin;
+  top: 1vmin;
+  max-width: 13.021vw;
+  line-height: 24px;
+  background-color: #675E91;
+  border: 0.104vw solid #AE7B9B; }
+  .legend__desc {
+    color: #9CCFB0;
+    margin: 1vmin;
+    cursor: default; }
+  .legend__key {
+    color: #9CCFB0;
+    border: 0.104vw solid #AE7B9B;
+    background-color: #675E91;
+    padding: 0.5vmin;
+    user-select: none; }
+
+
+/*# sourceMappingURL=events_js-index_js.css.map*/
