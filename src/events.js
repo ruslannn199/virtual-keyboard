@@ -1,4 +1,5 @@
-import { textarea, primaryKeys, secondaryKeys } from "./index";
+import { textarea, primaryKeys, secondaryKeys, updateLangVars } from "./index";
+import { Keyboard } from "./classes";
 
 let SELECTION_START;
 let SELECTION_END;
@@ -412,10 +413,4 @@ const timeout = async (target) => {
       resolve();
     }, 500);
   });
-};
-
-export const updateLangVars = (language) => {
-  primaryKeys = document.querySelectorAll('.keyboard__key_primary');
-  secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
-  document.cookie = `lang=${language}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/`;
 };
