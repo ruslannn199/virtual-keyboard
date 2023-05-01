@@ -4,8 +4,6 @@ import { keyboard } from './classes.js';
 import * as events from './events.js';
 import './assets/styles.scss';
 
-// TODO сделать радужной подсветку (по приколу)
-
 // Cookies
 if (!document.cookie) document.cookie = 'lang=en; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/';
 
@@ -23,7 +21,7 @@ window.addEventListener('load', () => {
       <h1 class="main__heading">
         RSS Виртуальная клавиатура
       </h1>
-      <textarea class="main__textarea" autofocus cols=80 rows=15 placeholder="Введите текст"></textarea>
+      <textarea class="main__textarea" autofocus cols=38 rows=13 placeholder="Введите текст"></textarea>
       <div class="keyboard">
         <div class="keyboard__row"></div>
         <div class="keyboard__row"></div>
@@ -65,10 +63,10 @@ window.addEventListener('load', () => {
         case 'keyShiftLeft': case 'keyShiftRight': keyFullElem.key.addEventListener('mousedown', events.keyboardShiftDown); keyFullElem.key.addEventListener('mouseup', events.keyboardShiftUp); break;
         case 'keyCtrlLeft': keyFullElem.key.addEventListener('mousedown', events.handleCtrlLeftDown); keyFullElem.key.addEventListener('mouseup', events.handleCtrlLeftUp); break;
         case 'keyAltLeft': keyFullElem.key.addEventListener('mousedown', events.handleAltLeftDown); keyFullElem.key.addEventListener('mouseup', events.handleAltLeftUp); break;
-        case 'keyUp': keyFullElem.key.addEventListener('click', events.handleKeyUpClick); break;
-        case 'keyLeft': keyFullElem.key.addEventListener('click', events.handleKeyLeftClick); break;
-        case 'keyDown': keyFullElem.key.addEventListener('click', events.handleKeyDownClick); break;
-        case 'keyRight': keyFullElem.key.addEventListener('click', events.handleKeyRightClick); break;
+        case 'keyUp': keyFullElem.key.addEventListener('click', events.handleKeyArrowClick); break;
+        case 'keyLeft': keyFullElem.key.addEventListener('click', events.handleKeyArrowClick); break;
+        case 'keyDown': keyFullElem.key.addEventListener('click', events.handleKeyArrowClick); break;
+        case 'keyRight': keyFullElem.key.addEventListener('click', events.handleKeyArrowClick); break;
         case 'keyWin': case 'keyAltRight': case 'keyCtrlRight': keyFullElem.key.addEventListener('click', events.handleEmptyClick); break;
         default: keyFullElem.key.addEventListener('click', events.handleKeyClick);
       }
@@ -92,9 +90,12 @@ window.addEventListener('load', () => {
   primaryKeys = document.querySelectorAll('.keyboard__key_primary');
   secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
 
-  document.querySelector('.main').insertAdjacentHTML('beforeend', `
-    <p class="main__desc">Клавиатура создана в Windows OS</p>
-    <p class="main__desc">Для переключения языка нажмите левые <span class="desc__key">Ctrl</span> + <span class="desc__key">Alt</span></p>
+  document.querySelector('.body').insertAdjacentHTML('beforeend', `
+    <aside class="legend">
+      <p class="legend__desc">Клавиатура создана в Windows OS</p>
+      <p class="legend__desc">Для переключения языка нажмите левые <span class="legend__key">Ctrl</span> + <span class="legend__key">Alt</span></p>
+      <p class="legend__desc">Клавиатура подсвечивается, если символы раскладок одинаковы. В ином случае считаю это излишним</p>
+    </aside>
   `)
 });
 

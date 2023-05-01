@@ -8,16 +8,13 @@ let ALT_FLAG = 0;
 let CAPS_FLAG = 0;
 let SHIFT_FLAG = 0;
 
-// TODO Нажатие на CAPS и SHIFT на клаве работает аналогично нажатию на клаве
-
-// TODO Key, Tab, Enter добавить функцию по правильному изменению во время выделения (SELECTION_START != SELECTION_END)
-
-// TODO Изменить стрелку вверх и вниз в начало и конце строки
 export const handleKeyClick = evt => {
+  randomColor(evt.currentTarget); 
+  timeout(evt.currentTarget);
   updateSelections();
   textarea.value = updateValue(evt.currentTarget.querySelector('.keyboard__key_primary').textContent);
   textarea.focus();
-  textarea.setSelectionRange(SELECTION_START + 1, SELECTION_END + 1);
+  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START + 1, SELECTION_END + 1) : textarea.setSelectionRange(SELECTION_START + 1, SELECTION_START + 1);
 }
 
 export const handleBackspaceClick = () => {
@@ -52,63 +49,25 @@ export const handleDeleteClick = () => {
   SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START, SELECTION_START) : textarea.setSelectionRange(SELECTION_START, SELECTION_START);
 }
 
-// TODO TabClick при полной строке
 export const handleTabClick = () => {
   updateSelections();
   textarea.value = updateValue('    ');
   textarea.focus();
-  textarea.setSelectionRange(SELECTION_START + 4, SELECTION_END + 4);
+  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START + 4, SELECTION_END + 4) : textarea.setSelectionRange(SELECTION_START + 4, SELECTION_START + 4);
 }
 
 export const handleEnterClick = () => {
   updateSelections();
   textarea.value = updateValue('\n');
   textarea.focus();
-  textarea.setSelectionRange(SELECTION_START + 1, SELECTION_END + 1);
-}
-export const handleKeyUpClick = () => {
-  updateSelections();
-  const rowStart = textarea.value.lastIndexOf('\n', SELECTION_START) + 1;
-  const rowLength = SELECTION_START - rowStart;
-  let prevRowStart = textarea.value.lastIndexOf('\n', rowStart - 2) + 1;
-  const prevRowLength = rowStart - prevRowStart - 1;
-
-  textarea.focus();
-  if (rowStart === 0) return;
-  rowLength < prevRowLength ? textarea.setSelectionRange(prevRowStart + rowLength, prevRowStart + rowLength) : textarea.setSelectionRange(rowStart - 1, rowStart - 1);
+  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START + 1, SELECTION_END + 1) : textarea.setSelectionRange(SELECTION_START + 1, SELECTION_START + 1);
 }
 
-export const handleKeyDownClick = () => {
+export const handleKeyArrowClick = evt => {
   updateSelections();
-  let rowStart;
-  const rowEnd = textarea.value.indexOf('\n', SELECTION_END);
-  textarea.value.lastIndexOf('\n', SELECTION_END) === rowEnd ? rowStart = textarea.value.lastIndexOf('\n', SELECTION_END - 1) + 1 : rowStart = textarea.value.lastIndexOf('\n', SELECTION_END) + 1;
-  if (rowEnd === -1) {
-    textarea.focus();
-    return;
-  }
-  const rowLength = SELECTION_END - rowStart;
-  let nextRowEnd = textarea.value.indexOf('\n', rowEnd + 1);
-  let nextRowLength;
-  if (nextRowEnd === -1) {
-    nextRowEnd = textarea.value.length;
-  } 
-  nextRowLength = nextRowEnd - rowEnd - 1;
-
+  textarea.value = updateValue(evt.currentTarget.querySelector('.keyboard__key_special').textContent);
   textarea.focus();
-  rowLength <= nextRowLength ? textarea.setSelectionRange(rowEnd + rowLength + 1, rowEnd + rowLength + 1) : textarea.setSelectionRange(nextRowEnd, nextRowEnd);
-}
-
-export const handleKeyLeftClick = () => {
-  updateSelections();
-  textarea.focus();
-  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START - 1, SELECTION_START - 1) : textarea.setSelectionRange(SELECTION_START, SELECTION_START);
-}
-
-export const handleKeyRightClick = () => {
-  updateSelections();
-  textarea.focus();
-  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START + 1, SELECTION_START + 1) : textarea.setSelectionRange(SELECTION_END, SELECTION_END);
+  SELECTION_START === SELECTION_END ? textarea.setSelectionRange(SELECTION_START + 1, SELECTION_END + 1) : textarea.setSelectionRange(SELECTION_START + 1, SELECTION_START + 1);
 }
 
 export const handleEmptyClick = evt => {
@@ -116,27 +75,13 @@ export const handleEmptyClick = evt => {
   textarea.focus();
 }
 
-export const handleCtrlLeftDown = () => {
-  CTRL_FLAG = 1;
-}
-
-export const handleCtrlLeftUp = () => {
-  CTRL_FLAG = 0;
-}
-
-export const handleAltLeftDown = () => {
-  ALT_FLAG = 1;
-}
-
-export const handleAltLeftUp = () => {
-  ALT_FLAG = 0;
-}
-
 export const handleKeyDown = evt => {
   textarea.focus();
   const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
   if (evt.code === 'Space') {
-    document.querySelector('.keyboard__key_space').classList.add('keyboard__key_active'); return;
+    randomColor(document.querySelector('.keyboard__key_space').parentNode);
+    document.querySelector('.keyboard__key_space').classList.add('keyboard__key_active');
+    return;
   }
   keyArr.forEach(key => {
     switch (evt.key) {
@@ -145,50 +90,64 @@ export const handleKeyDown = evt => {
           if (key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlLeft' ||
              !key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlRight') {
               key.parentNode.classList.add('keyboard__key_active');
+              randomColor(key.parentNode);
               if (evt.code === 'ControlLeft') {
                 CTRL_FLAG = 1;
               }
           }
         }
       }; break;
-      case 'Meta': if (key.innerText === 'Win') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'Meta': if (key.innerText === 'Win') key.parentNode.classList.add('keyboard__key_active'); randomColor(key.parentNode); break;
       case 'Shift': {
         if (key.innerText === 'Shift') {
           SHIFT_FLAG = 1;
           keyboardCaseSwitch();
           if (key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftLeft' ||
              !key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftRight') {
+               randomColor(key.parentNode);
               key.parentNode.classList.add('keyboard__key_active');
           };
         };
       }; break;
-      case 'CapsLock': if (key.innerText === 'Caps Lock') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'CapsLock': if (key.innerText === 'Caps Lock') { key.parentNode.classList.add('keyboard__key_active'); randomColor(key.parentNode); }; break;
       case 'Alt': case 'AltGraph': {
         if (key.innerText === 'Alt') {
           if (key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltLeft' ||
              !key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltRight') {
               key.parentNode.classList.add('keyboard__key_active');
+              randomColor(key.parentNode);
               if (evt.code === 'AltLeft') {
                 ALT_FLAG = 1;
               }
           }
         }
       }; break;
-      case 'Delete': if (key.innerText === 'Del') key.parentNode.classList.add('keyboard__key_active'); break;
+      case 'Delete': if (key.innerText === 'Del') { key.parentNode.classList.add('keyboard__key_active'); randomColor(key.parentNode); }; break;
       case 'Tab': {
         if (key.innerText === 'Tab') {
           handleTabClick();
           key.parentNode.classList.add('keyboard__key_active');
+          randomColor(key.parentNode);
           setTimeout(() => {
+            key.parentNode.style.borderColor = '';
             key.parentNode.classList.remove('keyboard__key_active');
           }, 500);
         }
       }; break;
-      case 'ArrowUp': if (key.innerText === '↑') key.parentNode.classList.add('keyboard__key_active'); break;
-      case 'ArrowLeft': if (key.innerText === '←') key.parentNode.classList.add('keyboard__key_active'); break;
-      case 'ArrowDown': if (key.innerText === '↓') key.parentNode.classList.add('keyboard__key_active'); break;
-      case 'ArrowRight': if (key.innerText === '→') key.parentNode.classList.add('keyboard__key_active'); break;
-      default: if (key.innerText === evt.key) key.parentNode.classList.add('keyboard__key_active');
+      case 'ArrowUp': if (key.innerText === '↑') { key.parentNode.classList.add('keyboard__key_active'); randomColor(key.parentNode); }; break;
+      case 'ArrowLeft': if (key.innerText === '←') { key.parentNode.classList.add('keyboard__key_active'); randomColor(key.parentNode); }; break;
+      case 'ArrowDown': if (key.innerText === '↓') { key.parentNode.classList.add('keyboard__key_active'); randomColor(key.parentNode); }; break;
+      case 'ArrowRight': if (key.innerText === '→') { key.parentNode.classList.add('keyboard__key_active'); randomColor(key.parentNode); }; break;
+      default: if ((key.innerText === evt.key || key.innerText === evt.key.toUpperCase()) ||
+      (key.parentNode.querySelector('.keyboard__key_secondary') && key.parentNode.querySelector('.keyboard__key_secondary').textContent === evt.key && SHIFT_FLAG === 1)) {
+        if (SHIFT_FLAG === 1) {
+          evt.preventDefault();
+          updateSelections();
+          textarea.value = updateValue(key.parentNode.querySelector('.keyboard__key_primary').textContent);
+        }
+        key.parentNode.classList.add('keyboard__key_active');
+        randomColor(key.parentNode);
+      }
     }
   });
 }
@@ -196,7 +155,9 @@ export const handleKeyDown = evt => {
 export const handleKeyUp = evt => {
   textarea.focus();
   if (evt.code === 'Space') {
-    document.querySelector('.keyboard__key_space').classList.remove('keyboard__key_active'); return;
+    document.querySelector('.keyboard__key_space').parentNode.style.borderColor = '';
+    document.querySelector('.keyboard__key_space').classList.remove('keyboard__key_active');
+    return;
   }
   const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
   keyArr.forEach(key => {
@@ -205,6 +166,7 @@ export const handleKeyUp = evt => {
         if (key.innerText === 'Ctrl') {
           if (key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlLeft' ||
              !key.parentNode.classList.contains('keyboard__key_left-ctrl') && evt.code === 'ControlRight') {
+              key.parentNode.style.borderColor = '';
               key.parentNode.classList.remove('keyboard__key_active');
               if (evt.code === 'ControlLeft') {
                 if (ALT_FLAG === 1) {
@@ -215,19 +177,21 @@ export const handleKeyUp = evt => {
           }
         }
       }; break;
-      case 'Meta': if (key.innerText === 'Win') key.parentNode.classList.remove('keyboard__key_active'); break;
+      case 'Meta': if (key.innerText === 'Win') { key.parentNode.classList.remove('keyboard__key_active'); key.parentNode.style.borderColor = ''; }; break;
       case 'Shift': {
         if (key.innerText === 'Shift') {
           SHIFT_FLAG = 0;
           keyboardCaseSwitch();
           if (key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftLeft' ||
              !key.parentNode.classList.contains('keyboard__key_left-shift') && evt.code === 'ShiftRight') {
+              key.parentNode.style.borderColor = '';
               key.parentNode.classList.remove('keyboard__key_active');
           }
         }
       }; break;
       case 'CapsLock': {
         if (key.innerText === 'Caps Lock') {
+          key.parentNode.style.borderColor = '';
           key.parentNode.classList.remove('keyboard__key_active');
           CAPS_FLAG === 0 ? CAPS_FLAG = 1 : CAPS_FLAG = 0;
           keyboardCaseSwitch();
@@ -237,6 +201,7 @@ export const handleKeyUp = evt => {
         if (key.innerText === 'Alt') {
           if (key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltLeft' ||
              !key.parentNode.classList.contains('keyboard__key_left-alt') && evt.code === 'AltRight') {
+              key.parentNode.style.borderColor = '';
               key.parentNode.classList.remove('keyboard__key_active');
               if (evt.code === 'AltLeft') {
                 if (CTRL_FLAG === 1) {
@@ -247,14 +212,40 @@ export const handleKeyUp = evt => {
           }
         }
       }; break;
-      case 'Delete': if (key.innerText === 'Del') key.parentNode.classList.remove('keyboard__key_active'); break;
-      case 'ArrowUp': if (key.innerText === '↑') key.parentNode.classList.remove('keyboard__key_active'); break;
-      case 'ArrowLeft': if (key.innerText === '←') key.parentNode.classList.remove('keyboard__key_active'); break;
-      case 'ArrowDown': if (key.innerText === '↓') key.parentNode.classList.remove('keyboard__key_active'); break;
-      case 'ArrowRight': if (key.innerText === '→') key.parentNode.classList.remove('keyboard__key_active'); break;
-      default: if (key.innerText === evt.key) key.parentNode.classList.remove('keyboard__key_active');
+      case 'Delete': if (key.innerText === 'Del') { key.parentNode.classList.remove('keyboard__key_active'); key.parentNode.style.borderColor = ''; }; break;
+      case 'ArrowUp': if (key.innerText === '↑') { key.parentNode.classList.remove('keyboard__key_active'); key.parentNode.style.borderColor = ''; }; break;
+      case 'ArrowLeft': if (key.innerText === '←') { key.parentNode.classList.remove('keyboard__key_active'); key.parentNode.style.borderColor = ''; }; break;
+      case 'ArrowDown': if (key.innerText === '↓') { key.parentNode.classList.remove('keyboard__key_active'); key.parentNode.style.borderColor = ''; }; break;
+      case 'ArrowRight': if (key.innerText === '→') { key.parentNode.classList.remove('keyboard__key_active'); key.parentNode.style.borderColor = ''; }; break;
+      default: if ((key.innerText === evt.key || key.innerText === evt.key.toUpperCase()) ||
+      (key.parentNode.querySelector('.keyboard__key_secondary') && key.parentNode.querySelector('.keyboard__key_secondary').textContent === evt.key && SHIFT_FLAG === 1)) {
+        key.parentNode.style.borderColor = '';
+        key.parentNode.classList.remove('keyboard__key_active');
+      };
     }
   });
+}
+
+export const handleCtrlLeftDown = () => {
+  CTRL_FLAG = 1;
+  if (ALT_FLAG === 1) {
+    switchLanguage();
+  }
+}
+
+export const handleCtrlLeftUp = () => {
+  CTRL_FLAG = 0;
+}
+
+export const handleAltLeftDown = () => {
+  ALT_FLAG = 1;
+  if (CTRL_FLAG === 1) {
+    switchLanguage();
+  }
+}
+
+export const handleAltLeftUp = () => {
+  ALT_FLAG = 0;
 }
 
 export const keyboardCapsClick = () => {
@@ -264,23 +255,21 @@ export const keyboardCapsClick = () => {
 
 export const keyboardShiftDown = () => {
   SHIFT_FLAG = 1;
-  console.log('shift down!');
   keyboardCaseSwitch();
 }
 
 export const keyboardShiftUp = () => {
   SHIFT_FLAG = 0;
-  console.log('shift up!');
   keyboardCaseSwitch();
 }
 
 export const focusLose = () => {
-  CTRL_FLAG, ALT_FLAG, SHIFT_FLAG = 0;
-  // TODO убрать SHIFT_FLAG, а то клик не работает
+  CTRL_FLAG, ALT_FLAG = 0;
   keyboardCaseSwitch();
   const keyArr = document.querySelectorAll('.keyboard__key_primary, .keyboard__key_special');
   keyArr.forEach(key => {
     if (key.parentNode.classList.contains('keyboard__key_active') && key.innerText !== 'Tab') {
+      key.parentNode.style.borderColor = '';
       key.parentNode.classList.remove('keyboard__key_active');
     }
   });
@@ -317,6 +306,34 @@ const switchLanguage = () => {
   }
 }
 
+const keyboardCaseSwitch = () => {
+  textarea.focus();
+  if (SHIFT_FLAG === 0) {
+    if (CAPS_FLAG === 0) {
+      addClasses(primaryKeys);
+      removeClasses(secondaryKeys);
+    }
+    else {
+      addClassesToLetters(secondaryKeys);
+      removeClassesToLetters(primaryKeys);
+      addClassesToOthers(primaryKeys);
+      removeClassesToOthers(secondaryKeys);
+    }
+  }
+  else {
+    if (CAPS_FLAG === 0) {
+      addClasses(secondaryKeys);
+      removeClasses(primaryKeys);
+    }
+    else {
+      addClassesToLetters(primaryKeys);
+      removeClassesToLetters(secondaryKeys);
+      addClassesToOthers(secondaryKeys);
+      removeClassesToOthers(primaryKeys);
+    }
+  }
+}
+
 const updateSelections = () => {
   SELECTION_START = textarea.selectionStart;
   SELECTION_END = textarea.selectionEnd;
@@ -326,20 +343,6 @@ const updateValue = value => {
   return textarea.value.slice(0, SELECTION_START) + value + textarea.value.slice(SELECTION_END);
 }
 
-const keyboardCaseSwitch = () => {
-  textarea.focus();
-  console.log(SHIFT_FLAG, CAPS_FLAG);
-  if (SHIFT_FLAG !== CAPS_FLAG) {
-    addClasses(secondaryKeys);
-    removeClasses(primaryKeys);
-  }
-  else {
-    addClasses(primaryKeys);
-    removeClasses(secondaryKeys);
-  }
-}
-
-// Only shiftable changing, change only to shiftable!
 const addClasses = keyArr => {
   keyArr.forEach(key => {
     key.classList.add('keyboard__key_primary');
@@ -357,3 +360,54 @@ const removeClasses = keyArr => {
     }
   })
 }
+
+const addClassesToLetters = keyArr => {
+  keyArr.forEach(key => {
+    if (key.parentNode.classList.contains('keyboard__key_shiftable')) {
+      key.classList.add('keyboard__key_primary');
+      key.classList.remove('keyboard__key_secondary');
+    }
+  })
+}
+
+const removeClassesToLetters = keyArr => {
+  keyArr.forEach(key => {
+    if (key.parentNode.classList.contains('keyboard__key_shiftable')) {
+      key.classList.add('keyboard__key_secondary');
+      key.classList.remove('keyboard__key_primary');
+    }
+  })
+}
+
+const addClassesToOthers = keyArr => {
+  keyArr.forEach(key => {
+    if (!key.parentNode.classList.contains('keyboard__key_shiftable')) {
+      key.classList.add('keyboard__key_primary');
+      key.classList.remove('keyboard__key_secondary');
+    }
+  })
+}
+
+const removeClassesToOthers = keyArr => {
+  keyArr.forEach(key => {
+    if (!key.parentNode.classList.contains('keyboard__key_shiftable')) {
+      key.classList.add('keyboard__key_secondary');
+      key.classList.remove('keyboard__key_primary');
+    }
+  })
+}
+
+const randomColor = target => {
+  const colors = ["#9CCFB0", "white", "#BC8F89", "#675E91", "blue", "indigo", "violet"];
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  target.style.borderColor = colors[randomIndex];
+}
+
+const timeout = async (target) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      target.style.borderColor = '';
+      resolve();
+    }, 500);
+  });
+}; 

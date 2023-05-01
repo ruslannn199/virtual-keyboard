@@ -69,10 +69,6 @@ const plugins = () => {
     })
   ];
 
-  if (isProd) {
-    base.push(new WebpackBundleAnalyzer());
-  }
-
   return base;
 };
 
@@ -82,11 +78,11 @@ module.exports = {
   entry: {
     main: { import: './index.js', filename: 'index.js'},
     classes: { import: './classes.js', filename: 'classes.js'},
+    events: { import: './events.js', filename: 'events.js'},
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: filename('js'),
-    assetModuleFilename: 'assets/images/[name][ext]',
+    assetModuleFilename: 'assets/[name][ext]',
     clean: true
   },
   resolve: {
@@ -106,7 +102,7 @@ module.exports = {
     open: true,
     hot: isDev
   },
-  devtool: isDev ? 'source-map' : 'hidden-nosources-source-map',
+  devtool: isDev ? 'source-map' : 'hidden-source-map',
   plugins: plugins(),
   module: {
     rules: [
