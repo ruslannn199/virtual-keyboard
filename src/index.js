@@ -1,17 +1,22 @@
 import 'normalize.css';
-import favIcon from './assets/favicon.png';
-import { keyboard } from './classes.js';
-import * as events from './events.js';
 import './assets/styles.scss';
+import { Keyboard } from './classes';
+import * as events from './events';
 
 // Cookies
 if (!document.cookie) document.cookie = 'lang=en; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/';
 
 const cookies = decodeURIComponent(document.cookie).split(';');
-let lang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
+const lang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
 
 // Load
-export let textarea;
+export const textarea = document.createElement('textarea');
+textarea.classList.add('main__textarea');
+textarea.autofocus = true;
+textarea.cols = 38;
+textarea.rows = 13;
+textarea.placeholder = 'Введите текст';
+
 export let primaryKeys;
 export let secondaryKeys;
 
@@ -21,7 +26,10 @@ window.addEventListener('load', () => {
       <h1 class="main__heading">
         RSS Виртуальная клавиатура
       </h1>
-      <textarea class="main__textarea" autofocus cols=38 rows=13 placeholder="Введите текст"></textarea>
+    </main>
+  `);
+  document.querySelector('.main').insertAdjacentElement('beforeend', textarea);
+  document.querySelector('.main').insertAdjacentHTML('beforeend', `
       <div class="keyboard">
         <div class="keyboard__row"></div>
         <div class="keyboard__row"></div>
@@ -29,21 +37,20 @@ window.addEventListener('load', () => {
         <div class="keyboard__row"></div>
         <div class="keyboard__row"></div>
       </div>
-    </main>
   `);
-  document.body.classList.add('body');
-  textarea = document.querySelector('.main__textarea');
 
-  const main = new keyboard();
-  for (let row in main) {
-    for (let key in main[row]) {
+  const main = new Keyboard();
+  for (const row in main) {
+    for (const key in main[row]) {
       const indexes = Object.keys(main[row]);
       let keyFullElem = '';
-      main[row][key].hasOwnProperty('en') ? keyFullElem = main[row][key][lang] : keyFullElem = main[row][key];
-      if (keyFullElem.isLetter){
+      main[row][key].hasOwnProperty('en')
+        ? keyFullElem = main[row][key][lang]
+        : keyFullElem = main[row][key];
+      if (keyFullElem.isLetter) {
         keyFullElem.key.classList.add('keyboard__key_shiftable');
       }
-      document.querySelectorAll('.keyboard__row')[Number.parseInt(row.charAt(3)) - 1].insertAdjacentElement('beforeend', keyFullElem.key);
+      document.querySelectorAll('.keyboard__row')[Number.parseInt(row.charAt(3), 10) - 1].insertAdjacentElement('beforeend', keyFullElem.key);
 
       // Std key listeners
       textarea.addEventListener('keydown', (evt) => {
@@ -78,7 +85,8 @@ window.addEventListener('load', () => {
         case 'keyCtrlLeft': keyFullElem.key.classList.add('keyboard__key_left-ctrl'); break;
         case 'keyAltLeft': keyFullElem.key.classList.add('keyboard__key_left-alt'); break;
         case 'keySpace': keyFullElem.key.classList.add('keyboard__key_space'); break;
-        case indexes[indexes.length - 1]: keyFullElem.key.classList.add('keyboard__key_last');
+        case indexes[indexes.length - 1]: keyFullElem.key.classList.add('keyboard__key_last'); break;
+        default: document.body.classList.add('body');
       }
 
       // KeyBoard Highlight Listeners
@@ -90,17 +98,11 @@ window.addEventListener('load', () => {
   primaryKeys = document.querySelectorAll('.keyboard__key_primary');
   secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
 
-  document.querySelector('.body').insertAdjacentHTML('beforeend', `
+  document.body.insertAdjacentHTML('beforeend', `
     <aside class="legend">
       <p class="legend__desc">Клавиатура создана в Windows OS</p>
       <p class="legend__desc">Для переключения языка нажмите левые <span class="legend__key">Ctrl</span> + <span class="legend__key">Alt</span></p>
       <p class="legend__desc">Клавиатура подсвечивается, если символы раскладок одинаковы. В ином случае считаю это излишним</p>
     </aside>
-  `)
+  `);
 });
-
-export const updateLangVars = lang => {
-  primaryKeys = document.querySelectorAll('.keyboard__key_primary');
-  secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
-  document.cookie = `lang=${lang}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/`;
-}

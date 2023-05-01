@@ -64,6 +64,14 @@ const plugins = () => {
         collapseWhitespace: isProd
       }
     }),
+		new CopyWebpackPlugin({
+			patterns: [
+				{
+					from: path.resolve(__dirname, './src/assets/favicon.png'),
+					to: path.resolve(__dirname, './dist/assets/favicon.png')
+				}
+			]
+		}),
     new MiniCssExtractPlugin({
       filename: filename('css')
     })
@@ -76,12 +84,11 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
-    main: { import: './index.js', filename: 'index.js'},
-    classes: { import: './classes.js', filename: 'classes.js'},
-    events: { import: './events.js', filename: 'events.js'},
+    main: './index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: filename('js'),
     assetModuleFilename: 'assets/[name][ext]',
     clean: true
   },
@@ -102,7 +109,7 @@ module.exports = {
     open: true,
     hot: isDev
   },
-  devtool: isDev ? 'source-map' : 'hidden-source-map',
+  devtool: isDev ? 'source-map' : 'hidden-nosources-source-map',
   plugins: plugins(),
   module: {
     rules: [

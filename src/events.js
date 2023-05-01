@@ -1,5 +1,4 @@
-import { textarea, primaryKeys, secondaryKeys, updateLangVars } from "./index.js";
-import { keyboard } from './classes.js';
+import { textarea, primaryKeys, secondaryKeys } from "./index";
 
 let SELECTION_START;
 let SELECTION_END;
@@ -7,6 +6,9 @@ let CTRL_FLAG = 0;
 let ALT_FLAG = 0;
 let CAPS_FLAG = 0;
 let SHIFT_FLAG = 0;
+
+// let primaryKeys;
+// let secondaryKeys;
 
 export const handleKeyClick = evt => {
   randomColor(evt.currentTarget); 
@@ -276,7 +278,7 @@ export const focusLose = () => {
 }
 
 const switchLanguage = () => {
-  const newKeyboard = new keyboard();
+  const newKeyboard = new Keyboard();
   const cookies = decodeURIComponent(document.cookie).split(';');
   const curLang = cookies.find((cookie) => cookie.includes('lang=')).split('=')[1];
   let lang;
@@ -410,4 +412,10 @@ const timeout = async (target) => {
       resolve();
     }, 500);
   });
-}; 
+};
+
+export const updateLangVars = (language) => {
+  primaryKeys = document.querySelectorAll('.keyboard__key_primary');
+  secondaryKeys = document.querySelectorAll('.keyboard__key_secondary');
+  document.cookie = `lang=${language}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/`;
+};

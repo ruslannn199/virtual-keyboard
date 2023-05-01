@@ -1,6 +1,6 @@
 const REGEXP = /^[a-zA-Zа-яА-ЯЁё]+$/;
 
-export class keyboard {
+export class Keyboard {
   constructor() {
     this.row1 = {};
     this.row1.keyBackTick = {};
