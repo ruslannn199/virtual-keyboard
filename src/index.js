@@ -487,6 +487,7 @@ window.addEventListener('load', () => {
       <p class="legend__desc">Клавиатура создана в Windows OS</p>
       <p class="legend__desc">Для переключения языка нажмите левые <span class="legend__key">Ctrl</span> + <span class="legend__key">Alt</span></p>
       <p class="legend__desc">Клавиатура подсвечивается, если символы раскладок одинаковы. В ином случае считаю это излишним</p>
+      <p class="legend__desc">Для проверки через eslint проверять следует файлы в ветке development, а не здесь</p>
     </aside>
   `);
 });
